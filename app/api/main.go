@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/iandanarko/concert/config"
 	"github.com/iandanarko/concert/internal/router"
 	"github.com/labstack/echo/v4"
@@ -54,13 +55,14 @@ func waitShutDown(e *echo.Echo) {
 }
 
 func buildDB(cfg config.Config) *sql.DB {
-	sqlCfg := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		cfg.DB.Host,
-		cfg.DB.Port,
+	sqlCfg := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		cfg.DB.Username,
 		cfg.DB.Password,
+		cfg.DB.Host,
+		cfg.DB.Port,
 		cfg.DB.Name,
 	)
+	log.Println(sqlCfg)
 
 	db, err := sql.Open(config.DbDriver, sqlCfg)
 	if err != nil {
