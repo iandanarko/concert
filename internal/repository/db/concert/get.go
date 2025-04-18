@@ -21,8 +21,7 @@ func (i Impl) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailabl
 		FROM concerts 
 		WHERE ` + cond + `
 		ORDER BY date ASC
-		OFFSET ` + fmt.Sprint(spec.Offset) + ` LIMIT ` + fmt.Sprint(spec.GetLimit()) + `
-	`
+		LIMIT ` + fmt.Sprint(spec.GetLimit()) + ` OFFSET ` + fmt.Sprint(spec.Offset)
 
 	cntQuery := `SELECT COUNT(*) FROM concerts WHERE ` + cond
 

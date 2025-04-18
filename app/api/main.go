@@ -55,7 +55,7 @@ func waitShutDown(e *echo.Echo) {
 }
 
 func buildDB(cfg config.Config) *sql.DB {
-	sqlCfg := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+	sqlCfg := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		cfg.DB.Username,
 		cfg.DB.Password,
 		cfg.DB.Host,
