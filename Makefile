@@ -22,3 +22,6 @@ dep:
 
 run-api:
 	go run ./app/api/main.go
+
+swag:
+	swag init -g ../../app/api/main.go -d ./internal/handler -o ./docs --parseInternal --parseDependency

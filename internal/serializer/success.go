@@ -1,8 +1,8 @@
 package serializer
 
 type SuccessResponse[T any] struct {
-	Data     T   `json:"data"`
-	Metadata any `json:"metadata"`
+	Data     T             `json:"data"`
+	Metadata *ListMetadata `json:"metadata"`
 }
 
 type ListMetadata struct {

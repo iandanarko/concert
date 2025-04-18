@@ -1,0 +1,97 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/concerts": {
+            "get": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "Retrieve available concerts list.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "concert"
+                ],
+                "summary": "Get Available concerts list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "search",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Activity detail retrieved successfully",
+                        "schema": {
+                            "$ref": "#/definitions/serializer.SuccessResponse-serializer_ConcertResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "serializer.ConcertResponse": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "serializer.ListMetadata": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "serializer.SuccessResponse-serializer_ConcertResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/serializer.ConcertResponse"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/serializer.ListMetadata"
+                }
+            }
+        }
+    }
+}

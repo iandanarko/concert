@@ -1,0 +1,60 @@
+definitions:
+  serializer.ConcertResponse:
+    properties:
+      date:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  serializer.ListMetadata:
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  serializer.SuccessResponse-serializer_ConcertResponse:
+    properties:
+      data:
+        $ref: '#/definitions/serializer.ConcertResponse'
+      metadata:
+        $ref: '#/definitions/serializer.ListMetadata'
+    type: object
+info:
+  contact: {}
+paths:
+  /concerts:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve available concerts list.
+      parameters:
+      - description: search
+        in: query
+        name: search
+        type: string
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Activity detail retrieved successfully
+          schema:
+            $ref: '#/definitions/serializer.SuccessResponse-serializer_ConcertResponse'
+      security:
+      - JWTAuth: []
+      summary: Get Available concerts list
+      tags:
+      - concert
+swagger: "2.0"

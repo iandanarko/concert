@@ -25,7 +25,7 @@ func SerializeConcerts(datas []concert.Concert, total, offset, limit uint64) Suc
 
 	return SuccessResponse[[]ConcertResponse]{
 		Data: result,
-		Metadata: ListMetadata{
+		Metadata: &ListMetadata{
 			Total:  total,
 			Offset: offset,
 			Limit:  limit,
