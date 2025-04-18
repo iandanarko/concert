@@ -6,8 +6,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/iandanarko/concert/config"
-	"github.com/iandanarko/concert/internal/entity"
 	cErr "github.com/iandanarko/concert/internal/error"
+	"github.com/iandanarko/concert/internal/model"
 	"github.com/iandanarko/concert/internal/serializer"
 	"github.com/labstack/echo/v4"
 )
@@ -39,7 +39,7 @@ func Auth(cfg config.Config) echo.MiddlewareFunc {
 			}
 
 			userID := uint64(claims["user_id"].(float64))
-			echoCtx.Set(Actor, &entity.Actor{UserID: userID})
+			echoCtx.Set(Actor, &model.Actor{UserID: userID})
 			return next(echoCtx)
 		}
 	}

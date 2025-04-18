@@ -3,10 +3,9 @@
 CREATE TABLE concerts (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  date DATE NOT NULL,
-  start_time TIME,
+  date DATETIME NOT NULL,
   created_at DATETIME NOT NULL,
-  updated_at DATETIME NOT NULL
+  updated_at DATETIME NOT NULL,
 );
 -- +goose StatementEnd
 
