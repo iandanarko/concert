@@ -29,8 +29,8 @@ func TestConcert_GetAvailableConcerts(t *testing.T) {
 
 	t.Run("Failed: error count", func(t *testing.T) {
 		t.Parallel()
-		expQuery := regexp.QuoteMeta("SELECT id, name, date, created_at, updated_at FROM concerts WHERE date > now() AND name LIKE (?%) ORDER BY date ASC LIMIT 10 OFFSET 0")
-		expCount := regexp.QuoteMeta("SELECT COUNT(*) FROM concerts WHERE date > now() AND name LIKE (?%)")
+		expQuery := regexp.QuoteMeta("SELECT id, name, date, created_at, updated_at FROM concerts WHERE date > now() AND name LIKE ? ORDER BY date ASC LIMIT 10 OFFSET 0")
+		expCount := regexp.QuoteMeta("SELECT COUNT(*) FROM concerts WHERE date > now() AND name LIKE ?")
 		suite := new(t)
 		defer suite.db.Close()
 
@@ -46,8 +46,8 @@ func TestConcert_GetAvailableConcerts(t *testing.T) {
 
 	t.Run("Success: success get with search", func(t *testing.T) {
 		t.Parallel()
-		expQuery := regexp.QuoteMeta("SELECT id, name, date, created_at, updated_at FROM concerts WHERE date > now() AND name LIKE (?%) ORDER BY date ASC LIMIT 10 OFFSET 0")
-		expCount := regexp.QuoteMeta("SELECT COUNT(*) FROM concerts WHERE date > now() AND name LIKE (?%)")
+		expQuery := regexp.QuoteMeta("SELECT id, name, date, created_at, updated_at FROM concerts WHERE date > now() AND name LIKE ? ORDER BY date ASC LIMIT 10 OFFSET 0")
+		expCount := regexp.QuoteMeta("SELECT COUNT(*) FROM concerts WHERE date > now() AND name LIKE ?")
 		suite := new(t)
 		defer suite.db.Close()
 		expTotal := uint64(1)

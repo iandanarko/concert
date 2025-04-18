@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strings"
 
 	"github.com/iandanarko/concert/internal/model/concert"
 )
@@ -12,8 +13,8 @@ func (i Impl) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailabl
 	args := []any{}
 	cond := "date > now()"
 	if spec.Search != "" {
-		cond += " AND name LIKE (?%)"
-		args = append(args, spec.Search)
+		cond += " AND name LIKE ?"
+		args = append(args, fmt.Sprintf("%s%%", strings.ToLower(spec.Search)))
 	}
 
 	query := `
