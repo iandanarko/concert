@@ -19,6 +19,7 @@ func BuildRoutes(e *echo.Echo, cfg config.Config, db *sql.DB) {
 		middleware.Auth(cfg),
 	}
 	routes := []route{}
+	routes = append(routes, concertRouters(db)...)
 
 	for _, r := range routes {
 		e.Add(r.method, r.path, r.handler, middlewares...)
