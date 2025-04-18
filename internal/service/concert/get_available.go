@@ -23,11 +23,11 @@ func NewGetAvailable(
 }
 
 // GetAvailable list available concerts
-func (s GetAvailableService) GetAvailable(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, error) {
-	results, err := s.repo.GetAvailableConcerts(ctx, spec)
+func (s GetAvailableService) GetAvailable(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, uint64, error) {
+	results, total, err := s.repo.GetAvailableConcerts(ctx, spec)
 	if err != nil {
 		log.Printf("Error get available concerts: %v", err)
 	}
 
-	return results, err
+	return results, total, err
 }

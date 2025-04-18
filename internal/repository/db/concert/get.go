@@ -3,11 +3,12 @@ package concertrepo
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/iandanarko/concert/internal/model/concert"
 )
 
-func (i Impl) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, error) {
+func (i Impl) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, uint64, error) {
 	args := []any{}
 	cond := "date > now()"
 	if spec.Search != "" {
@@ -20,11 +21,14 @@ func (i Impl) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailabl
 		FROM concerts 
 		WHERE ` + cond + `
 		ORDER BY date ASC
+		OFFSET ` + fmt.Sprint(spec.Offset) + ` LIMIT ` + fmt.Sprint(spec.GetLimit()) + `
 	`
+
+	cntQuery := `SELECT COUNT(*) FROM concerts WHERE ` + cond
 
 	rows, err := i.db.QueryContext(ctx, query, args...)
 	if err != nil && err != sql.ErrNoRows {
-		return []concert.Concert{}, err
+		return []concert.Concert{}, 0, err
 	}
 
 	result := []concert.Concert{}
@@ -32,10 +36,16 @@ func (i Impl) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailabl
 		c := concert.Concert{}
 		err := rows.Scan(&c.ID, &c.Name, &c.Date, &c.CreatedAt, &c.UpdatedAt)
 		if err != nil {
-			return []concert.Concert{}, err
+			return []concert.Concert{}, 0, err
 		}
 		result = append(result, c)
 	}
 
-	return result, nil
+	var total uint64
+	err = i.db.QueryRowContext(ctx, cntQuery, args...).Scan(&total)
+	if err != nil {
+		return []concert.Concert{}, 0, err
+	}
+
+	return result, total, nil
 }

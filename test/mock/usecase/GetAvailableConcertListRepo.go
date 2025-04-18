@@ -24,7 +24,7 @@ func (_m *GetAvailableConcertListRepo) EXPECT() *GetAvailableConcertListRepo_Exp
 }
 
 // GetAvailableConcerts provides a mock function with given fields: ctx, spec
-func (_m *GetAvailableConcertListRepo) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, error) {
+func (_m *GetAvailableConcertListRepo) GetAvailableConcerts(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, uint64, error) {
 	ret := _m.Called(ctx, spec)
 
 	if len(ret) == 0 {
@@ -32,8 +32,9 @@ func (_m *GetAvailableConcertListRepo) GetAvailableConcerts(ctx context.Context,
 	}
 
 	var r0 []concert.Concert
-	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, concert.GetAvailableSpec) ([]concert.Concert, error)); ok {
+	var r1 uint64
+	var r2 error
+	if rf, ok := ret.Get(0).(func(context.Context, concert.GetAvailableSpec) ([]concert.Concert, uint64, error)); ok {
 		return rf(ctx, spec)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, concert.GetAvailableSpec) []concert.Concert); ok {
@@ -44,13 +45,19 @@ func (_m *GetAvailableConcertListRepo) GetAvailableConcerts(ctx context.Context,
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, concert.GetAvailableSpec) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, concert.GetAvailableSpec) uint64); ok {
 		r1 = rf(ctx, spec)
 	} else {
-		r1 = ret.Error(1)
+		r1 = ret.Get(1).(uint64)
 	}
 
-	return r0, r1
+	if rf, ok := ret.Get(2).(func(context.Context, concert.GetAvailableSpec) error); ok {
+		r2 = rf(ctx, spec)
+	} else {
+		r2 = ret.Error(2)
+	}
+
+	return r0, r1, r2
 }
 
 // GetAvailableConcertListRepo_GetAvailableConcerts_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetAvailableConcerts'
@@ -72,12 +79,12 @@ func (_c *GetAvailableConcertListRepo_GetAvailableConcerts_Call) Run(run func(ct
 	return _c
 }
 
-func (_c *GetAvailableConcertListRepo_GetAvailableConcerts_Call) Return(_a0 []concert.Concert, _a1 error) *GetAvailableConcertListRepo_GetAvailableConcerts_Call {
-	_c.Call.Return(_a0, _a1)
+func (_c *GetAvailableConcertListRepo_GetAvailableConcerts_Call) Return(_a0 []concert.Concert, _a1 uint64, _a2 error) *GetAvailableConcertListRepo_GetAvailableConcerts_Call {
+	_c.Call.Return(_a0, _a1, _a2)
 	return _c
 }
 
-func (_c *GetAvailableConcertListRepo_GetAvailableConcerts_Call) RunAndReturn(run func(context.Context, concert.GetAvailableSpec) ([]concert.Concert, error)) *GetAvailableConcertListRepo_GetAvailableConcerts_Call {
+func (_c *GetAvailableConcertListRepo_GetAvailableConcerts_Call) RunAndReturn(run func(context.Context, concert.GetAvailableSpec) ([]concert.Concert, uint64, error)) *GetAvailableConcertListRepo_GetAvailableConcerts_Call {
 	_c.Call.Return(run)
 	return _c
 }

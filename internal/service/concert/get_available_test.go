@@ -32,10 +32,11 @@ func TestGetAvailableService_GetAvailable(t *testing.T) {
 		spec := concert.GetAvailableSpec{}
 		expErr := errors.New("some error")
 		suite := newGetavailableTest(t)
-		suite.repo.EXPECT().GetAvailableConcerts(ctx, spec).Return([]concert.Concert{}, expErr).Once()
-		result, err := suite.service.GetAvailable(ctx, spec)
+		suite.repo.EXPECT().GetAvailableConcerts(ctx, spec).Return([]concert.Concert{}, 0, expErr).Once()
+		result, total, err := suite.service.GetAvailable(ctx, spec)
 		assert.ErrorIs(t, expErr, err)
 		assert.Empty(t, result)
+		assert.Zero(t, total)
 	})
 
 	t.Run("Success: success get", func(t *testing.T) {
@@ -43,10 +44,12 @@ func TestGetAvailableService_GetAvailable(t *testing.T) {
 		ctx := context.TODO()
 		spec := concert.GetAvailableSpec{}
 		exp := []concert.Concert{{ID: 1}}
+		expTotal := uint64(1)
 		suite := newGetavailableTest(t)
-		suite.repo.EXPECT().GetAvailableConcerts(ctx, spec).Return(exp, nil).Once()
-		result, err := suite.service.GetAvailable(ctx, spec)
+		suite.repo.EXPECT().GetAvailableConcerts(ctx, spec).Return(exp, expTotal, nil).Once()
+		result, total, err := suite.service.GetAvailable(ctx, spec)
 		assert.NoError(t, err)
 		assert.Equal(t, exp, result)
+		assert.Equal(t, expTotal, total)
 	})
 }

@@ -7,8 +7,9 @@ import (
 )
 
 type GetAvailableConcertListRepo interface {
-	GetAvailableConcerts(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, error)
+	GetAvailableConcerts(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, uint64, error)
 }
 
 type GetAvailableConcertListUseCase interface {
+	GetAvailable(ctx context.Context, spec concert.GetAvailableSpec) ([]concert.Concert, uint64, error)
 }
