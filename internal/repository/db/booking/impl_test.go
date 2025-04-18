@@ -1,21 +1,21 @@
-package concertrepo_test
+package bookingrepo_test
 
 import (
 	"database/sql"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	concertrepo "github.com/iandanarko/concert/internal/repository/db/concert"
+	bookingrepo "github.com/iandanarko/concert/internal/repository/db/booking"
 )
 
 type implTest struct {
 	db   *sql.DB
 	mock sqlmock.Sqlmock
-	repo concertrepo.Impl
+	repo bookingrepo.Impl
 }
 
 func new() implTest {
 	db, mock, _ := sqlmock.New()
-	repo := concertrepo.New(db)
+	repo := bookingrepo.New(db)
 	return implTest{
 		db:   db,
 		mock: mock,

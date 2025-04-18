@@ -12,4 +12,8 @@ var (
 	ErrBadRequest CustomError = errors.New("Bad Request")
 	// ErrInternalServer is returned when error is unknown
 	ErrInternalServer CustomError = errors.New("Internal Server")
+	// ErrOutOfTickets
+	ErrOutOfTickets CustomError = errors.New("Out Of Tickets")
+	// ErrTicketWindowNotFound
+	ErrTicketWindowNotFound CustomError = errors.New("Ticket Window not available")
 )
