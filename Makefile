@@ -7,8 +7,8 @@ migrate:
 rollback:
 	goose down
 
-mockgen-service:
-	mockgen -source=service/$(name).go -package=mock_service -destination=test/mock/service/$(name).go
+mock:
+	mockery --dir=./internal/usecase --outpkg=mock_service --output=test/mock/usecase --with-expecter --all
 
 test:
 	go test -race ./...
@@ -22,3 +22,6 @@ dep:
 
 run-api:
 	go run ./app/api/main.go
+
+swag:
+	swag init -g ../../app/api/main.go -d ./internal/handler -o ./docs --parseInternal --parseDependency
