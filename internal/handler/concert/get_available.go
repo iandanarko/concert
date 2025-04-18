@@ -39,7 +39,7 @@ type GetAvailableQuery struct {
 //	@Param search query string false "search"
 //	@Param offset query int false "offset"
 //	@Param limit query int false "limit"
-//	@Success		200	{object} serializer.SuccessResponse[serializer.ConcertResponse]	"Activity detail retrieved successfully"
+//	@Success		200	{object} serializer.SuccessResponse[serializer.ConcertResponse]	"retrieve concerts successfully"
 //	@Router			/concerts [get]
 func (h getavailableHandler) Handle(echoCtx echo.Context) error {
 	ctx := echoCtx.Request().Context()

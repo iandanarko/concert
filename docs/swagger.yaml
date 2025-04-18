@@ -1,4 +1,14 @@
 definitions:
+  booking.BookBodyRequest:
+    properties:
+      concert_id:
+        type: integer
+      quantity:
+        type: integer
+    required:
+    - concert_id
+    - quantity
+    type: object
   serializer.ConcertResponse:
     properties:
       date:
@@ -17,6 +27,16 @@ definitions:
       total:
         type: integer
     type: object
+  serializer.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  serializer.SuccessMessageResponse:
+    properties:
+      data:
+        $ref: '#/definitions/serializer.MessageResponse'
+    type: object
   serializer.SuccessResponse-serializer_ConcertResponse:
     properties:
       data:
@@ -27,6 +47,30 @@ definitions:
 info:
   contact: {}
 paths:
+  /bookings:
+    post:
+      consumes:
+      - application/json
+      description: book tickets.
+      parameters:
+      - description: body request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.BookBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success booking
+          schema:
+            $ref: '#/definitions/serializer.SuccessMessageResponse'
+      security:
+      - JWTAuth: []
+      summary: book tickets
+      tags:
+      - booking
   /concerts:
     get:
       consumes:
@@ -49,7 +93,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: Activity detail retrieved successfully
+          description: retrieve concerts successfully
           schema:
             $ref: '#/definitions/serializer.SuccessResponse-serializer_ConcertResponse'
       security:
