@@ -23,6 +23,7 @@ func BuildRoutes(e *echo.Echo, cfg config.Config, db *sql.DB) {
 	}
 	routes := []route{}
 	routes = append(routes, concertRouters(db)...)
+	routes = append(routes, bookingRouter(db)...)
 	e.Add(http.MethodGet, "/swagger/*", echoSwagger.WrapHandler)
 
 	for _, r := range routes {

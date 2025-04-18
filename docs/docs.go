@@ -15,6 +15,45 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/bookings": {
+            "post": {
+                "security": [
+                    {
+                        "JWTAuth": []
+                    }
+                ],
+                "description": "book tickets.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "summary": "book tickets",
+                "parameters": [
+                    {
+                        "description": "body request",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/booking.BookBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success booking",
+                        "schema": {
+                            "$ref": "#/definitions/serializer.SuccessMessageResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/concerts": {
             "get": {
                 "security": [
@@ -55,7 +94,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Activity detail retrieved successfully",
+                        "description": "retrieve concerts successfully",
                         "schema": {
                             "$ref": "#/definitions/serializer.SuccessResponse-serializer_ConcertResponse"
                         }
@@ -65,6 +104,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "booking.BookBodyRequest": {
+            "type": "object",
+            "required": [
+                "concert_id",
+                "quantity"
+            ],
+            "properties": {
+                "concert_id": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                }
+            }
+        },
         "serializer.ConcertResponse": {
             "type": "object",
             "properties": {
@@ -90,6 +144,22 @@ const docTemplate = `{
                 },
                 "total": {
                     "type": "integer"
+                }
+            }
+        },
+        "serializer.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "serializer.SuccessMessageResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/serializer.MessageResponse"
                 }
             }
         },
