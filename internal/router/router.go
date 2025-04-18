@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/iandanarko/concert/config"
+	"github.com/iandanarko/concert/internal/middleware"
 	"github.com/labstack/echo/v4"
 )
 
@@ -14,7 +15,9 @@ type route struct {
 }
 
 func BuildRoutes(e *echo.Echo, cfg config.Config, db *sql.DB) {
-	middlewares := []echo.MiddlewareFunc{}
+	middlewares := []echo.MiddlewareFunc{
+		middleware.Auth(cfg),
+	}
 	routes := []route{}
 
 	for _, r := range routes {
